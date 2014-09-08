@@ -56,7 +56,7 @@ public class LoginPane extends JPanel implements ActionListener{
         add(pwdLabel);
 
         idTextField = JTextFieldFactory.createJTextField(159, 21, Color.GRAY);
-        passwordField = JTextFieldFactory.createJPasswordField(159, 21, Color.GRAY, '¡ñ');
+        passwordField = JTextFieldFactory.createJPasswordField(159, 21, Color.GRAY, '*');
         add(idTextField);
         add(passwordField);
 

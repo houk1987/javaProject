@@ -10,5 +10,7 @@ public interface Session {
 
     void sendMessage(SessionMessage sessionMessage);
 
+    void sendMessage(Message message);
+
     void acceptMessage(Message message);
 }

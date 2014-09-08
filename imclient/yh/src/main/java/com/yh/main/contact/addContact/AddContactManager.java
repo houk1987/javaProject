@@ -1,6 +1,9 @@
 package com.yh.main.contact.addContact;
 
 
+import com.yh.lanuch.YhClient;
+import com.yh.main.contact.YmContactManager;
+
 import javax.swing.*;
 
 /**
@@ -21,13 +24,7 @@ public class AddContactManager {
 
 
     public void showAddContactDialog(){
-//        if(addContactDialog == null){
-//            addContactDialog = WindowFactory.createJDialog("加入朋友名单",new ImageIcon("").getImage(),426,416);
-//            addContactDialog.setContentPane(new ContactPane());
-//            addContactDialog.setVisible(true);
-//        }
 
-        addContactDialog.requestFocus();
     }
 
     public void disposeAddContactDialog(){

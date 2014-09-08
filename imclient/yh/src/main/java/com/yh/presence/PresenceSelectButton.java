@@ -6,6 +6,7 @@ import com.ui.jlabel.ExpandableImageLabel;
 import com.ui.jlabel.JLabelFactory;
 import com.yh.lanuch.YhClient;
 import com.yh.main.MainFrame;
+import org.jivesoftware.smack.packet.Presence;
 
 import javax.swing.*;
 import java.awt.*;
@@ -117,7 +118,8 @@ public class PresenceSelectButton extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     statusIconLabel.setIcon(type.getPresenceTypeIcon());
                     type.changePresence(YhClient.getInstance().getLoginAccount());
-                    MainFrame.getInstance().refreshContactTreePresence(YhPresenc);
+                    Presence presence = YhClient.getInstance().getImConnection().getContactPresence(YhClient.getInstance().getLoginAccount());
+                    MainFrame.getInstance().refreshContactTreePresence(presence);
                 }
             });
         }

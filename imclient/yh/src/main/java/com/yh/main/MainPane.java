@@ -2,8 +2,10 @@ package com.yh.main;
 
 import com.ui.jlabel.JLabelFactory;
 import com.yh.button.CustomButtonFactory;
+import com.yh.lanuch.YhClient;
 import com.yh.login.MenuPane;
 import com.yh.main.contact.YhContactTree;
+import com.yh.main.contact.YmContactManager;
 import com.yh.presence.PresenceSelectButton;
 import org.jivesoftware.smack.packet.Presence;
 
@@ -84,6 +86,8 @@ public class MainPane extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // YhManager.getAddContactManager().showAddContactDialog();
+                    YmContactManager ymContactManager = new YmContactManager(YhClient.getInstance().getImConnection());
+                    ymContactManager.applyNewContact("test1@30san.com");
                 }
             });
             searchBarPane.add(addBuddyButton);

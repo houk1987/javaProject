@@ -24,12 +24,17 @@ public class ChatSession implements Session {
     public void sendMessage(SessionMessage sessionMessage) {
         if(sessionMessage !=null){
             Message message = sessionMessage.getMessage();
-            message.setType(Message.Type.chat);
-            try {
-                chat.sendMessage(message);
-            } catch (XMPPException e) {
-                e.printStackTrace();
-            }
+           sendMessage(message);
+        }
+    }
+
+    @Override
+    public void sendMessage(Message message) {
+        message.setType(Message.Type.chat);
+        try {
+            chat.sendMessage(message);
+        } catch (XMPPException e) {
+            e.printStackTrace();
         }
     }
 

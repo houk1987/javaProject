@@ -19,15 +19,11 @@ public class ImPacketLister implements PacketListener {
     @Override
     public void processPacket(Packet packet) {
         if(packet instanceof Message){
-
             Message message = (Message)packet;
-
             System.out.println(message.getType());
             for(MessageHandel messageHandel : messageHandels){
                 messageHandel.handel(message);
             }
-        }else if(packet instanceof Presence){
-            System.out.println("asdasdsda");
         }
     }
 

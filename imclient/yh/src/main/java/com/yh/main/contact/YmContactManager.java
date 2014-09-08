@@ -9,6 +9,7 @@ import com.imService.presence.PresenceType;
 import com.yh.lanuch.YhClient;
 import com.yh.presence.YhPresence;
 import org.jivesoftware.smack.RosterEntry;
+import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 
 import javax.swing.*;
@@ -56,5 +57,14 @@ public class YmContactManager extends ContactManager {
     @Override
     public List<Group> getAllGroup() {
         return null;
+    }
+
+    public void  applyNewContact(String applyAccount){
+        Message message = new Message();
+        message.setFrom(YhClient.getInstance().getLoginAccount());
+        message.setTo(applyAccount);
+        message.setBody(YhClient.getInstance().getLoginAccount()+"…Í«Îƒ˙Œ™∫√”—!");
+        message.setProperty("messageType","applyNewContact");
+        YhClient.getInstance().getSession(applyAccount, Message.Type.chat).sendMessage(message);
     }
 }
