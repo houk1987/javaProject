@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/imMsgProService/imMsgProService.iml" filepath="$PROJECT_DIR$/imMsgProService/imMsgProService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imService/imService.iml" filepath="$PROJECT_DIR$/imService/imService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imclient.iml" filepath="$PROJECT_DIR$/imclient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pubTools/pubTools.iml" filepath="$PROJECT_DIR$/pubTools/pubTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ui/ui.iml" filepath="$PROJECT_DIR$/ui/ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yh/yh.iml" filepath="$PROJECT_DIR$/yh/yh.iml" />
+    </modules>
+  </component>
+</project>
+
