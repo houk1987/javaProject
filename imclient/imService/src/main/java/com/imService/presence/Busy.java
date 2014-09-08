@@ -7,6 +7,7 @@ import javax.swing.*;
 
 /**
  * Created by a on 2014/9/5.
+ * 消息类型
  */
 public class Busy extends PresenceType {
     private ImConnection imConnection;
