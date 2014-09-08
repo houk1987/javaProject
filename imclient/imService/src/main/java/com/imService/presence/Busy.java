@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * Created by a on 2014/9/5.
  * PresenceType
- * 
+ *
  *
  */
 public class Busy extends PresenceType {
