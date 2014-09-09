@@ -6,6 +6,7 @@ import com.yh.lanuch.YhClient;
 import com.yh.login.MenuPane;
 import com.yh.main.contact.YhContactTree;
 import com.yh.main.contact.YmContactManager;
+import com.yh.main.contact.addContact.AddContactDialog;
 import com.yh.presence.PresenceSelectButton;
 import org.jivesoftware.smack.packet.Presence;
 
@@ -80,14 +81,14 @@ public class MainPane extends JPanel {
             searchBarPane.setLayout(null);
             add(searchBarPane);
 
-            JButton addBuddyButton = CustomButtonFactory.createAddBuddyButton();
+            final JButton addBuddyButton = CustomButtonFactory.createAddBuddyButton();
             addBuddyButton.setLocation(11, 6);
             addBuddyButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // YhManager.getAddContactManager().showAddContactDialog();
-                    YmContactManager ymContactManager = new YmContactManager(YhClient.getInstance().getImConnection());
-                    ymContactManager.applyNewContact("test1@30san.com");
+                    AddContactDialog addContactDialog = new AddContactDialog(MainFrame.getInstance());
+                    addContactDialog.setVisible(true);
+
                 }
             });
             searchBarPane.add(addBuddyButton);

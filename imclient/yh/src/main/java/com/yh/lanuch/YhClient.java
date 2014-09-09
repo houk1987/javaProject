@@ -3,6 +3,7 @@ package com.yh.lanuch;
 import com.imService.client.Client;
 import com.imService.connection.ImConnection;
 import com.imService.message.ImPacketLister;
+import com.yh.session.message.AcceptNewContactHandel;
 import com.yh.session.message.ChatMessageHandel;
 import org.jivesoftware.smack.XMPPException;
 
@@ -28,6 +29,7 @@ public class YhClient extends Client{
     public void loginClient(String account, String pwd) throws XMPPException {
         super.loginClient(account, pwd);
         ImPacketLister.addMessageHandel(new ChatMessageHandel());
+        ImPacketLister.addMessageHandel(new AcceptNewContactHandel());
     }
 
 
