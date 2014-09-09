@@ -16,9 +16,14 @@ import java.util.List;
 public abstract class ImConnection {
     private XMPPConnection xmppConnection;
     private String serverName;
+
     protected ImConnection() {
         xmppConnection =createXMPPConnection();
         serverName = "@" + xmppConnection.getServiceName();
+    }
+
+    protected ImConnection(String host,int port,String resource){
+
     }
 
     public void connection()throws XMPPException{
