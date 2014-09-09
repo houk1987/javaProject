@@ -21,7 +21,7 @@ public abstract class ImConnection {
         serverName = "@" + xmppConnection.getServiceName();
     }
 
-    public void connection(){
+    public void connection()throws XMPPException{
         if(isConnectionNotNull()){
             try {
                 xmppConnection.connect();
@@ -29,6 +29,8 @@ public abstract class ImConnection {
                 listenerContactPresence(); //¼àÌýºÃÓÑ×´Ì¬
             } catch (XMPPException e) {
                 e.printStackTrace();
+                throw new XMPPException("·þÎñÆ÷Á¬½ÓÊ§°Ü!");
+
             }
         }
     }
@@ -46,7 +48,7 @@ public abstract class ImConnection {
             }
         } catch (XMPPException e) {
             e.printStackTrace();
-            throw new XMPPException("µÇÂ½·þÎñÆ÷Ê§°Ü");
+            throw new XMPPException("ÕËºÅ»òÃÜÂë´íÎó!");
         }
     }
 

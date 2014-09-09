@@ -145,7 +145,7 @@ public class LoginPane extends JPanel implements ActionListener{
                 loginFrame = null;
                 MainFrame.getInstance().setVisible(true);
             } catch (XMPPException e1) {
-                JOptionPane.showMessageDialog(LoginPane.this, "’À∫≈ªÚ√‹¬Î¥ÌŒÛ!");
+                JOptionPane.showMessageDialog(loginFrame, e1.getMessage());
                 YhClient.getInstance().loginOut();
             }
         }

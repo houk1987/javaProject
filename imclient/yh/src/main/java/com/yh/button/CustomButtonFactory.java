@@ -82,4 +82,8 @@ public class CustomButtonFactory {
         return ButtonFactory.createButton(contactButtonPath,"","AddBuddy.png");
     }
 
+    public static JButton createFinishButton() {
+        return ButtonFactory.createButton(contactButtonPath,"","finish.png");
+    }
+
 }

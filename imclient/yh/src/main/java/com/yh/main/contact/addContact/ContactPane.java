@@ -1,5 +1,6 @@
 package com.yh.main.contact.addContact;
 
+import com.san30.pub.tools.SanHttpClient;
 import com.ui.JTextField.JTextFieldFactory;
 import com.ui.jlabel.JLabelFactory;
 import com.yh.button.CustomButtonFactory;
@@ -14,6 +15,8 @@ import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by a on 2014/9/2.
@@ -26,14 +29,16 @@ public class ContactPane extends JPanel implements ActionListener{
     private JButton finishButton;
     private JButton previousButton;
     private JDialog jDialog;
+    validateApplyAccountWork validateApplyAccountWork;
     private FirstPane firstPane;
     private SecondPane secondPane;
     private ThridPane thridPane;
     private JPanel[] panels = new JPanel[3];
-    private int currentIndex;
+    private int currentIndex  =2;
     public ContactPane(JDialog jDialog) {
-        setOpaque(false);
+        setOpaque(true);
         this.jDialog  = jDialog;
+        validateApplyAccountWork = new validateApplyAccountWork();
         setLayout(new BorderLayout(10,10));
         firstPane = new FirstPane();
         secondPane = new SecondPane();
@@ -57,9 +62,12 @@ public class ContactPane extends JPanel implements ActionListener{
         nextButton = CustomButtonFactory.createNextButton();
         nextButton.setDisabledIcon(new ImageIcon(SKIN_PATH+"nextDisabel.png"));
         cancelButton = CustomButtonFactory.createCancelButton();
+        cancelButton.setDisabledIcon(new ImageIcon(SKIN_PATH+"cancelDisabel.png"));
+        finishButton = CustomButtonFactory.createFinishButton();
         btnPane.add(previousButton);
         btnPane.add(nextButton);
         btnPane.add(cancelButton);
+        btnPane.add(finishButton);
 
         previousButton.addActionListener(this);
         nextButton.addActionListener(this);
@@ -83,12 +91,14 @@ public class ContactPane extends JPanel implements ActionListener{
                 nextButton.setEnabled(true);
                 cancelButton.setVisible(true);
                 finishButton.setVisible(false);
+                secondPane.setName(firstPane.accountJTextField.getText());
                 break;
             case 2:
-                previousButton.setEnabled(true);
+                previousButton.setEnabled(false);
                 nextButton.setEnabled(false);
-                cancelButton.setVisible(false);
-                finishButton.setVisible(true);
+                cancelButton.setEnabled(false);
+                finishButton.setVisible(false);
+                // validateApplyAccountWork.execute();
                break;
         }
 
@@ -112,19 +122,14 @@ public class ContactPane extends JPanel implements ActionListener{
            jDialog.dispose();
         }else if(e.getSource() == nextButton){
             currentIndex = ++currentIndex;
-            if(currentIndex == 1){
-                secondPane.setName(firstPane.accountJTextField.getText());
-            }
             remove(1);
             switchPane(currentIndex);
         }else if(e.getSource() == previousButton){
             remove(1);
             currentIndex = --currentIndex;
-
             switchPane(currentIndex);
         }else if(finishButton == e.getSource()){
-            YmContactManager ymContactManager = new YmContactManager(YhClient.getInstance().getImConnection());
-            ymContactManager.applyNewContact(firstPane.accountJTextField.getText());
+            jDialog.dispose();
         }
     }
 
@@ -223,13 +228,18 @@ public class ContactPane extends JPanel implements ActionListener{
 
     private class ThridPane extends JPanel {
         private final static String SKIN_PATH = "res/main/addContact/";
-        private JLabel lineLabel;
+        private JLabel tipLabel;
         private ThridPane() {
             setLayout(null);
             setOpaque(false);
-            lineLabel = JLabelFactory.createJLabel(new ImageIcon(SKIN_PATH+"thridCard.png"));
-            lineLabel.setLocation(3,347);
-            add(lineLabel);
+            Font font = new Font("宋体",Font.BOLD,12);
+            tipLabel = JLabelFactory.createJLabel("請稍等，系統正在向朋友發出好友申請！",font,new Color(204,204,204));
+            tipLabel.setBounds(5,5,300,23);
+            add(tipLabel);
+        }
+
+        void setTipText(String txt){
+            tipLabel.setText(txt);
         }
     }
 
@@ -237,14 +247,32 @@ public class ContactPane extends JPanel implements ActionListener{
     class validateApplyAccountWork extends SwingWorker{
         @Override
         protected Object doInBackground() throws Exception {
-            return false;
+            HashMap<String,String> paramMap = new HashMap<String, String>();
+            paramMap.put("username",firstPane.accountJTextField.getText());
+            String rs = SanHttpClient.getDataAsString("http://" + YhClient.getInstance().getImConnection().getXMPPConnection().getHost() + ":" + 9090 + "/plugins/updserver/contactOk", paramMap);
+            return Boolean.valueOf(rs);
         }
 
         @Override
         protected void done() {
             if(isDone()){
-                cancelButton.setVisible(false);
-                finishButton.setVisible(true);
+                try {
+                    boolean rs = Boolean.valueOf(get().toString());
+                    if(rs){
+                        YmContactManager ymContactManager = new YmContactManager(YhClient.getInstance().getImConnection());
+                        ymContactManager.applyNewContact(firstPane.accountJTextField.getText());
+                        thridPane.setTipText("系统已经向朋友发出了好友申请。");
+                        finishButton.setVisible(true);
+                        cancelButton.setVisible(false);
+                    }else{
+                        thridPane.setTipText(firstPane.accountJTextField.getText()+"不是一个正确的 YM ID ,请检查 稍后再试。");
+                    }
+                    previousButton.setEnabled(true);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
