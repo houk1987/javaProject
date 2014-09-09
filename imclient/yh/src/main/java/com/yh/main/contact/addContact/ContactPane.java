@@ -1,6 +1,5 @@
 package com.yh.main.contact.addContact;
 
-import com.sun.org.apache.bcel.internal.generic.FADD;
 import com.ui.JTextField.JTextFieldFactory;
 import com.ui.jlabel.JLabelFactory;
 import com.yh.button.CustomButtonFactory;
@@ -13,7 +12,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by a on 2014/9/2.
@@ -75,12 +75,20 @@ public class ContactPane extends JPanel implements ActionListener{
                 if("".equals(firstPane.accountJTextField.getText())){
                     nextButton.setEnabled(false);
                 }
+                cancelButton.setVisible(true);
+                finishButton.setVisible(false);
                 break;
             case 1:
                 previousButton.setEnabled(true);
                 nextButton.setEnabled(true);
+                cancelButton.setVisible(true);
+                finishButton.setVisible(false);
                 break;
             case 2:
+                previousButton.setEnabled(true);
+                nextButton.setEnabled(false);
+                cancelButton.setVisible(false);
+                finishButton.setVisible(true);
                break;
         }
 
