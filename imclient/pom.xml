@@ -12,7 +12,24 @@
         <module>dtclient</module>
         <module>ui</module>
         <module>pubTools</module>
+        <module>imService</module>
     </modules>
 
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <target>1.7</target>
+                    <source>1.7</source>
+                    <fork>true</fork>
+                    <compilerArgument>-XDignore.symbol.file</compilerArgument>
+                    <executable>C:\Program Files (x86)\Java\jdk1.7.0_67\bin\javac.exe</executable>
+                    <compilerVersion>1.7</compilerVersion>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

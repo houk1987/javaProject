@@ -34,11 +34,11 @@ public class ContactPane extends JPanel implements ActionListener{
     private SecondPane secondPane;
     private ThridPane thridPane;
     private JPanel[] panels = new JPanel[3];
-    private int currentIndex  =2;
+    private int currentIndex  =0;
     public ContactPane(JDialog jDialog) {
         setOpaque(true);
         this.jDialog  = jDialog;
-        validateApplyAccountWork = new validateApplyAccountWork();
+
         setLayout(new BorderLayout(10,10));
         firstPane = new FirstPane();
         secondPane = new SecondPane();
@@ -72,6 +72,7 @@ public class ContactPane extends JPanel implements ActionListener{
         previousButton.addActionListener(this);
         nextButton.addActionListener(this);
         cancelButton.addActionListener(this);
+        finishButton.addActionListener(this);
         switchPane(currentIndex);
     }
 
@@ -98,7 +99,8 @@ public class ContactPane extends JPanel implements ActionListener{
                 nextButton.setEnabled(false);
                 cancelButton.setEnabled(false);
                 finishButton.setVisible(false);
-                // validateApplyAccountWork.execute();
+                validateApplyAccountWork = new validateApplyAccountWork();
+                validateApplyAccountWork.execute();
                break;
         }
 
@@ -248,35 +250,21 @@ public class ContactPane extends JPanel implements ActionListener{
         @Override
         protected Object doInBackground() throws Exception {
             HashMap<String,String> paramMap = new HashMap<String, String>();
-            paramMap.put("username",firstPane.accountJTextField.getText());
-            String rs = SanHttpClient.getDataAsString("http://" + YhClient.getInstance().getImConnection().getXMPPConnection().getHost() + ":" + 9090 + "/plugins/updserver/contactOk", paramMap);
-            return Boolean.valueOf(rs);
-        }
-
-        @Override
-        protected void done() {
-            if(isDone()){
-                try {
-                    boolean rs = Boolean.valueOf(get().toString());
-                    if(rs){
-                        YmContactManager ymContactManager = new YmContactManager(YhClient.getInstance().getImConnection());
-                        ymContactManager.applyNewContact(firstPane.accountJTextField.getText());
-                        thridPane.setTipText("系统已经向朋友发出了好友申请。");
-                        finishButton.setVisible(true);
-                        cancelButton.setVisible(false);
-                    }else{
-                        thridPane.setTipText(firstPane.accountJTextField.getText()+"不是一个正确的 YM ID ,请检查 稍后再试。");
-                    }
-                    previousButton.setEnabled(true);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
+            paramMap.put("jid",firstPane.accountJTextField.getText());
+            paramMap.put("type","validateAccount");
+            String rs = SanHttpClient.getDataAsString("http://" + YhClient.getInstance().getImConnection().getXMPPConnection().getHost() + ":" + 9090 + "/plugins/updserver/contactok", paramMap);
+            System.out.println("添加的结果"+rs);
+            if(Boolean.valueOf(rs.trim())){
+                YmContactManager ymContactManager = new YmContactManager(YhClient.getInstance().getImConnection());
+                ymContactManager.applyNewContact(firstPane.accountJTextField.getText());
+                thridPane.setTipText("系统已经向朋友发出了好友申请。");
+                finishButton.setVisible(true);
+                cancelButton.setVisible(false);
+            }else{
+                thridPane.setTipText(firstPane.accountJTextField.getText()+"不是一个正确的 YM ID ,请检查 稍后再试。");
             }
+            previousButton.setEnabled(true);
+            return true;
         }
     }
-
-
-
 }

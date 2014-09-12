@@ -8,10 +8,10 @@ import java.awt.*;
  */
 public class FontStyle {
     private Color color; //字体颜色
-    private int size; //字体大小
+    private int size=10; //字体大小
     private boolean bold; //是否粗体
     private boolean italic;//是否斜体
-    private String fontStyleName; //字体样式名称
+    private String fontStyleName="宋体"; //字体样式名称
 
     public FontStyle(){
 

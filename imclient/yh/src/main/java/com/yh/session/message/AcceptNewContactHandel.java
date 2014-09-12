@@ -11,8 +11,10 @@ public class AcceptNewContactHandel implements MessageHandel {
 
     @Override
     public void handel(Message message) {
-        String messageType = message.getProperty("messageType").toString();
-        if("applyNewContact".equals(messageType)){
+        String subject = message.getSubject();
+        System.out.println(subject);
+        if("∫√”—…Í’à".equals(subject)){
+            System.out.println(subject);
             AcceptNewContactDialog acceptNewContactDialog = new AcceptNewContactDialog(message.getFrom());
             acceptNewContactDialog.showNotifyWindow();
         }

@@ -2,9 +2,11 @@ package com.imService.client;
 
 import com.imService.connection.ImConnection;
 import com.imService.session.ChatSession;
+import com.imService.session.GroupSession;
 import com.imService.session.Session;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smackx.muc.MultiUserChat;
 
 /**
  * Created by a on 2014/9/4.
@@ -52,7 +54,7 @@ public abstract class Client {
         if(type.equals(Message.Type.chat)){
             session = new ChatSession(imConnection,jid);
         }else if(type.equals(Message.Type.groupchat)){
-
+            session = new GroupSession(imConnection,jid,clientLoginer.getAccount());
         }
         return session;
     }

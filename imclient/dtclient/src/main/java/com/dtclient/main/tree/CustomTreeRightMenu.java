@@ -1,7 +1,9 @@
 package com.dtclient.main.tree;
 
 
-import com.client.dt.ui.main.MainFrame;
+
+import com.dtclient.main.MainFrame;
+import com.dtclient.main.group.GroupDialog;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -46,8 +48,8 @@ public class CustomTreeRightMenu extends JPopupMenu implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == createCustomGroupItem){
-            //GroupDialog groupDialog = new GroupDialog(MainFrame.getMainFrame());
-          //  groupDialog.setVisible(true);
+            GroupDialog groupDialog = new GroupDialog(MainFrame.getInstance());
+            groupDialog.setVisible(true);
         }else if(e.getSource() == delCustomGroupItem){
 
         }else if(e.getSource() == modifyCustomGroupItem){

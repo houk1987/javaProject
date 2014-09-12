@@ -19,7 +19,7 @@ public class OnLine extends PresenceType {
     @Override
     public void changePresence(String jid) {
         Presence presence = new Presence(org.jivesoftware.smack.packet.Presence.Type.available);
-        presence.setMode(org.jivesoftware.smack.packet.Presence.Mode.chat);
+        presence.setMode(Presence.Mode.available);
         presence.setStatus(presenceName);
         imConnection.getXMPPConnection().sendPacket(presence);
     }

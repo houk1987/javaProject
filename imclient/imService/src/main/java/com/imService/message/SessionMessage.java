@@ -60,4 +60,24 @@ public class SessionMessage {
     public Timestamp getSendTime() {
         return sendTime;
     }
+
+    public void setFontStyle(FontStyle fontStyle) {
+        this.fontStyle = fontStyle;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public void setSendTime(Timestamp sendTime) {
+        this.sendTime = sendTime;
+    }
 }

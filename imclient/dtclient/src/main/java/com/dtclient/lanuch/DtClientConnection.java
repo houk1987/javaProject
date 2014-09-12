@@ -1,6 +1,8 @@
 package com.dtclient.lanuch;
 
+import com.dtclient.sys.SysProperties;
 import com.imService.connection.ImConnection;
+import com.pubTools.properties.PropertiesTools;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.packet.Presence;
@@ -10,11 +12,11 @@ import org.jivesoftware.smack.packet.Presence;
  */
 public class DtClientConnection extends ImConnection {
 
-
-
     @Override
     protected XMPPConnection createXMPPConnection() {
-        ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(StartDtClient.host,StartDtClient.port,StartDtClient.resource);
+        String domain = SysProperties.domain();   //”Ú√˚
+        ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(StartDtClient.host,StartDtClient.port,domain);
+        connectionConfiguration.setSASLAuthenticationEnabled(false);
         return new XMPPConnection(connectionConfiguration);
     }
 

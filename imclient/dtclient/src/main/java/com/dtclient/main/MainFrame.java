@@ -1,12 +1,18 @@
 package com.dtclient.main;
 
+import com.dtclient.main.tree.CustomTree;
+import com.dtclient.sys.SysProperties;
+import com.pubTools.properties.PropertiesTools;
+import com.san30.sim.pub.imagewindow.ImageFrame;
+import com.ui.frame.PubFrame;
+
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by HK on 2014/9/9.
  */
-public class MainFrame extends JFrame{
-
+public class MainFrame extends PubFrame{
     private static MainFrame mainFrame;
     private MainFrameContentPane mainFrameContentPane;
     public static MainFrame getInstance() {
@@ -15,9 +21,16 @@ public class MainFrame extends JFrame{
     }
 
     private MainFrame(){
+        super(new MainFrameTitle());
+        setImagePath(SysProperties.framePath());
         mainFrameContentPane = new MainFrameContentPane();
-        setContentPane(mainFrameContentPane);
+        add(mainFrameContentPane, BorderLayout.CENTER);
         setSize(278,753);
-        setResizable(false);
     }
+
+
+    public CustomTree getCustomTree(){
+        return mainFrameContentPane.getCustomTree();
+    }
+
 }

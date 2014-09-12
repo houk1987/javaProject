@@ -1,5 +1,6 @@
 package com.yh.notify;
 
+
 import com.san30.pub.tools.SanHttpClient;
 import com.ui.jlabel.JLabelFactory;
 import com.ui.notify.NotifyWindow;
@@ -27,13 +28,14 @@ public class AcceptNewContactDialog extends NotifyWindow {
         setTitle("好友申请");
         this.from = from;
         setContent(from+"想申请您为好友!",10,10);
+        setSize(220, 151);
     }
 
     @Override
     protected JPanel initContentPane() {
         JPanel contentPane = new JPanel(null);
         contentPane.setBackground(Color.WHITE);
-        String url = "";
+        String url = null;
         Font font = new Font("宋体",Font.PLAIN,13);
         linkLabel = JLabelFactory.createLinkLabel("同意",font,"#0000FF",url);
         linkLabel.setBounds(20,70,50,23);
@@ -41,10 +43,12 @@ public class AcceptNewContactDialog extends NotifyWindow {
             @Override
             public void mouseClicked(MouseEvent e) {
                 HashMap<String,String> paramMap = new HashMap<String, String>();
-                paramMap.put("username",from);
-                paramMap.put("jid",YhClient.getInstance().getLoginAccount());
+                paramMap.put("jid",from);
+                paramMap.put("targetAccount",YhClient.getInstance().getLoginAccount());
                 try {
-                    SanHttpClient.getDataAsString("http://" + YhClient.getInstance().getImConnection().getXMPPConnection().getHost() + ":" + 9090 + "/plugins/updserver/contactOk", paramMap);
+                    String URL = "http://" + YhClient.getInstance().getImConnection().getXMPPConnection().getHost() + ":" + 9090 + "/plugins/updserver/contactok";
+                    SanHttpClient.getDataAsString(URL, paramMap);
+                    dispose();
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
@@ -87,12 +91,5 @@ public class AcceptNewContactDialog extends NotifyWindow {
         content.setLocation(x, y + 2);
 
         this.add(content);
-    }
-
-
-    public static void main(String[] args) {
-        AcceptNewContactDialog a= new AcceptNewContactDialog("侯昆");
-        a.setSize(220, 151);
-        a.showNotifyWindow();
     }
 }

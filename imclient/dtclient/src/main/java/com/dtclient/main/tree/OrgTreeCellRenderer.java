@@ -2,9 +2,10 @@ package com.dtclient.main.tree;
 
 
 
-import com.talk.client.vo.Unit;
-import com.talk.client.vo.UserInfo;
-import com.talk.client.conferenceRoom.FriendRooms;
+
+import com.dtclient.vo.FriendRooms;
+import com.dtclient.vo.Unit;
+import com.dtclient.vo.UserInfo;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -19,8 +20,8 @@ public class OrgTreeCellRenderer extends DefaultTreeCellRenderer {
 
     public OrgTreeCellRenderer() {
         this.setFont(new Font("ËÎÌו", Font.PLAIN, 12));
-        setOpenIcon(new ImageIcon("res/tree/close.png"));
-        setClosedIcon(new ImageIcon("res/tree/open.png"));
+        setOpenIcon(new ImageIcon("res/main/tree/close.png"));
+        setClosedIcon(new ImageIcon("res/main/tree/open.png"));
     }
 
     @Override

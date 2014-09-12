@@ -25,7 +25,6 @@ public class PresenceSelectButton extends JPanel {
     private ExpandableImageLabel centerLabel;
     private JLabel rightLabel;
     private JLabel statusIconLabel;
-    private JLabel account;
 
 
     public PresenceSelectButton() {
@@ -42,9 +41,7 @@ public class PresenceSelectButton extends JPanel {
         leftLabel.setLayout(new BorderLayout(3, 0));
         leftLabel.add(statusIconLabel, BorderLayout.CENTER);
         Font font = new Font("ËÎÌו", Font.BOLD, 14);
-        account = JLabelFactory.createJLabel(DtClient.getInstance().getLoginAccount(), font, Color.WHITE);
         centerLabel.setLayout(new BorderLayout());
-        centerLabel.add(account, BorderLayout.NORTH);
         defaultBg();
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -89,7 +86,7 @@ public class PresenceSelectButton extends JPanel {
     private void switchBg(ImageIcon left, ImageIcon center, ImageIcon right) {
         leftLabel.setIcon(left);
         leftLabel.setSize(left.getIconWidth(), left.getIconHeight());
-        centerLabel.setImageIcon(center);
+       // centerLabel.setImageIcon(center);
         rightLabel.setIcon(right);
         rightLabel.setSize(right.getIconWidth(), right.getIconHeight());
         setSize(100, rightLabel.getHeight());
@@ -118,7 +115,6 @@ public class PresenceSelectButton extends JPanel {
                     statusIconLabel.setIcon(type.getPresenceTypeIcon());
                     type.changePresence(DtClient.getInstance().getLoginAccount());
                     Presence presence = DtClient.getInstance().getImConnection().getContactPresence(DtClient.getInstance().getLoginAccount());
-                   // MainFrame.getInstance().refreshContactTreePresence(presence);
                 }
             });
         }

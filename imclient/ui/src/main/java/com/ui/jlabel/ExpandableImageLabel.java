@@ -1,8 +1,8 @@
 package com.ui.jlabel;
 
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -13,30 +13,36 @@ import javax.swing.JLabel;
  *
  */
 public class ExpandableImageLabel extends JLabel {
-	private static final long serialVersionUID = 1L;
-
-    private ImageIcon imageIcon;
-	public ExpandableImageLabel(ImageIcon imageIcon) {
-        this.imageIcon = imageIcon;
+    private static final long serialVersionUID = 1L;
+    private String imageFile = null;
+    public ExpandableImageLabel(String imageFile) {
+        setImageFile(imageFile);
     }
 
-    public void setImageIcon(ImageIcon imageIcon){
-        this.imageIcon = imageIcon;
+    public boolean setImageFile(String imageFile){
+        this.imageFile = imageFile;
+        if (null == imageFile) return false;
+        if (imageFile.isEmpty())return false;
+        File file = new File(imageFile);
+        if (!file.exists())return false;
+        if (!file.isFile())return false;
+        ImageIcon icon = new ImageIcon(imageFile);
+        if (null == icon) return false;
+        this.setIcon(icon);
+        Dimension size = new Dimension(icon.getIconWidth(),icon.getIconHeight());
+        this.setPreferredSize(size);
+        return true;
     }
-	
 
-	
+    public String getImageFile(){
+        return imageFile;
+    }
 
-	
-	@Override
-	public void paint(Graphics g) {
-		Graphics2D g2d = null;
-		if( g instanceof Graphics2D)
-			 g2d = (Graphics2D) g;
-		else 
-			return;
-        if(imageIcon == null)return;
-		g2d.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
-	    super.paint(g);
-	}
+
+    public void paint(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        Image image = ((ImageIcon)this.getIcon()).getImage();
+        g2d.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+        super.paint(g);
+    }
 }

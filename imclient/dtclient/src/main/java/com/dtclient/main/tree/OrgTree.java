@@ -1,10 +1,13 @@
 package com.dtclient.main.tree;
 
 
+import com.dtclient.lanuch.DtClient;
 import com.dtclient.main.MainFrame;
+import com.dtclient.session.SessionFrame;
 import com.dtclient.vo.Unit;
 import com.dtclient.vo.UserInfo;
 import com.ui.tree.PubTree;
+import org.jivesoftware.smack.packet.Message;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -19,6 +22,7 @@ public class OrgTree extends PubTree {
 
     public OrgTree() {
         super();
+        setCellRenderer(new OrgTreeCellRenderer());
         treeModel = (DefaultTreeModel) this.getModel();
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -32,9 +36,9 @@ public class OrgTree extends PubTree {
                             if (selectNode.getUserObject() instanceof UserInfo) {
                                 try {
                                     UserInfo userInfo = (UserInfo) selectNode.getUserObject();
-
+                                    SessionFrame.openChatSessionFrame(userInfo);
                                 } catch (Exception e1) {
-
+                                    e1.printStackTrace();
                                     JOptionPane.showMessageDialog(MainFrame.getInstance(), "打开会话窗口失败!", "提示", JOptionPane.ERROR_MESSAGE);
                                 }
                             }
@@ -43,7 +47,7 @@ public class OrgTree extends PubTree {
                 }
             }
         });
-        setCellRenderer(new OrgTreeCellRenderer());
+
     }
 
     public void loadData() {

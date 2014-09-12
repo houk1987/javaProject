@@ -1,10 +1,7 @@
 package com.imService.contact;
 
-import com.imService.client.Client;
 import com.imService.connection.ImConnection;
 import org.jivesoftware.smack.RosterEntry;
-import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Presence;
 
 import java.util.List;
 
@@ -21,6 +18,4 @@ public abstract class ContactManager {
     }
 
     public abstract List<Contact> getAllContact();
-
-    public abstract List<Group> getAllGroup();
 }

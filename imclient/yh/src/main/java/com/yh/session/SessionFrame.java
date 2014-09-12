@@ -51,7 +51,6 @@ public class SessionFrame extends JFrame {
 
     public void insertMessageToDisplay(SessionMessage sessionMessage){
         String html = new ChatMessageContentHtml(sessionMessage).getContentHtml();
-        System.out.println(html);
         mainPane.chatDisplayPane.insertMessage(html);
     }
 }

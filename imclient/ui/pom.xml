@@ -17,5 +17,10 @@
             <artifactId>imService</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.30</groupId>
+            <artifactId>pubCompent</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

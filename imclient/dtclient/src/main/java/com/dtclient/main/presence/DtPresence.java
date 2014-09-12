@@ -1,10 +1,7 @@
 package com.dtclient.main.presence;
 
 import com.dtclient.lanuch.DtClient;
-import com.imService.presence.Busy;
-import com.imService.presence.Hide;
-import com.imService.presence.OnLine;
-import com.imService.presence.PresenceType;
+import com.imService.presence.*;
 import org.jivesoftware.smack.packet.Presence;
 
 import javax.swing.*;
@@ -18,19 +15,21 @@ public class DtPresence {
 
     public enum YhPresenceType{
         ONLINE,
-        BUSY,
-        HIDE;
+        AWAY,
+        OFFLINE;
     }
 
-    private static OnLine onLine = new OnLine("我在空",createImage("online.png"), DtClient.getInstance().getImConnection());
-    private static Busy busy = new Busy("忙碌中",createImage("busy.png"),DtClient.getInstance().getImConnection());
-    private static Hide hide = new Hide("對所有人隐藏",createImage("offline.png"),DtClient.getInstance().getImConnection());
+    private static OnLine onLine = new OnLine("在线",createImage("online.png"), DtClient.getInstance().getImConnection());
+    private static Away away = new Away("离开",createImage("away.png"),DtClient.getInstance().getImConnection());
+//    private static Busy busy = new Busy("忙碌中",createImage("busy.png"),DtClient.getInstance().getImConnection());
+    private static OffLine offLine = new OffLine("离线",createImage("offline.png"),DtClient.getInstance().getImConnection());
+
 
     public static List<PresenceType> getPresenceTypeList() {
         List<PresenceType> presenceTypes = new ArrayList<>();
         presenceTypes.add(onLine);
-        presenceTypes.add(busy);
-        presenceTypes.add(hide);
+        presenceTypes.add(away);
+        presenceTypes.add(offLine);
         return presenceTypes;
     }
 
@@ -44,11 +43,11 @@ public class DtPresence {
             case ONLINE:
                 presenceType = onLine;
                 break;
-            case BUSY:
-                presenceType = busy;
+            case AWAY:
+                presenceType = away;
                 break;
-            case HIDE:
-                presenceType = hide;
+            case OFFLINE:
+                presenceType = offLine;
                 break;
         }
         return presenceType;
@@ -57,10 +56,10 @@ public class DtPresence {
     public static ImageIcon getPresenceTypeIcon(Presence presence){
         if(presence.isAvailable()){ //我有空
             return getPresenceTypeIcon(YhPresenceType.ONLINE);
-        }else if(presence.isAvailable() && presence.getMode().equals(Presence.Mode.dnd)){  //忙碌
-            return getPresenceTypeIcon(YhPresenceType.BUSY);
+        }else if(presence.isAvailable() && presence.getMode().equals(Presence.Mode.away)){  //忙碌
+            return getPresenceTypeIcon(YhPresenceType.AWAY);
         }else { //隐身
-            return getPresenceTypeIcon(YhPresenceType.HIDE);
+            return getPresenceTypeIcon(YhPresenceType.OFFLINE);
         }
     }
 

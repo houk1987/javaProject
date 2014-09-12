@@ -1,79 +1,66 @@
 package com.dtclient.main;
 
-import com.dtclient.button.CustomButtonFactory;
-import com.dtclient.main.presence.PresenceSelectButton;
+import com.dtclient.lanuch.DtClient;
+import com.dtclient.main.tree.CustomTree;
+import com.dtclient.main.tree.OrgTree;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * Created by HK on 2014/9/9.
  */
 public class MainFrameContentPane extends JPanel {
+    private JScrollPane jScrollPane;  //滚动面板
+     OrgTree orgTree;  //组织机构树
+     CustomTree customTree; //自定义树
 
-    private String skinPath = "res/main/";
-    private ImageIcon bgIcon;
-    private JButton tabLeftBtn;
-    private JButton tabRightBtn;
+    /**
+     *
+     */
     public MainFrameContentPane() {
-        bgIcon = new ImageIcon(skinPath+"/bg/mainframewindow.png");
-        setLayout(null);
-        addPresenceSelectBtn();
-        addTabLeftBtn();
-        addTabRightBtn();
+        setOpaque(false);
+        setLayout(new BorderLayout());
+        add(new AccountInfoPane(), BorderLayout.NORTH);
+        JPanel centerPane = new JPanel(new BorderLayout());
+        int role = DtClient.getInstance().getUserInfo().getRoleId();
+        DtNavigationBar dtNavigationBar = new DtNavigationBar(this,role);
+        centerPane.add(dtNavigationBar, BorderLayout.NORTH);
+        this.jScrollPane = new JScrollPane();
+        this.jScrollPane.setBorder(null);
+        centerPane.add(jScrollPane, BorderLayout.CENTER);
+        add(centerPane, BorderLayout.CENTER);
+        switch (role) {
+            case 1:  //训练管理人员
+                customTree = new CustomTree();
+                customTree.loadDefaultGroup();
+                changeView(customTree);
+                break;
+            case 2: //受训人员
+                customTree = new CustomTree();
+                customTree.loadDtUserInfo();
+                changeView(customTree);
+                break;
+            case 3:  //导调人员
+                customTree = new CustomTree();
+                customTree.loadDefaultGroup();
+                orgTree = new OrgTree();
+                orgTree.loadData();
+                changeView(customTree);
+                break;
+            case 4: //评估人员
+                customTree = new CustomTree();
+                customTree.loadDefaultGroup();
+                changeView(customTree);
+                break;
+        }
     }
 
-
-    /**
-     * 添加状态选择按钮
-     */
-    private void addPresenceSelectBtn(){
-        PresenceSelectButton presenceSelectButton  = new PresenceSelectButton();
-        presenceSelectButton.setLocation(10,10);
-        add(presenceSelectButton);
+    public void changeView(JComponent jComponent) {
+        jScrollPane.setViewportView(jComponent);
     }
 
-    /**
-     * 添加左边Tab按钮
-     */
-    private void addTabLeftBtn(){
-        tabLeftBtn = CustomButtonFactory.createTabLeftBtn();
-        tabLeftBtn.setSelectedIcon(new ImageIcon(skinPath+"tab/TabLeftSelected.png"));
-        tabLeftBtn.setLocation(5,80);
-        add(tabLeftBtn);
-        tabLeftBtn.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                tabLeftBtn.setSelected(true);
-                tabRightBtn.setSelected(false);
-            }
-        });
-    }
-
-    /**
-     * 添加左边Tab按钮
-     */
-    private void addTabRightBtn(){
-        tabRightBtn = CustomButtonFactory.createTabRightBtn();
-        tabRightBtn.setSelectedIcon(new ImageIcon(skinPath+"tab/TabRightSelected.png"));
-        tabRightBtn.setLocation(135,80);
-        tabRightBtn.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                tabLeftBtn.setSelected(false);
-                tabRightBtn.setSelected(true);
-            }
-        });
-        add(tabRightBtn);
-    }
-
-
-    @Override
-    public void paintComponents(Graphics g) {
-        super.paintComponents(g);
-        Image image = bgIcon.getImage();
-        g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+    public CustomTree getCustomTree() {
+        return customTree;
     }
 }
