@@ -5,7 +5,8 @@ import com.san30.pub.tools.SanHttpClient;
 import com.ui.jlabel.JLabelFactory;
 import com.ui.notify.NotifyWindow;
 import com.ui.session.WrapLetterHTMLEditorKit;
-import com.yh.lanuch.YhClient;
+import com.yh.manager.YhManager;
+import sys.SysProperties;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,9 +45,9 @@ public class AcceptNewContactDialog extends NotifyWindow {
             public void mouseClicked(MouseEvent e) {
                 HashMap<String,String> paramMap = new HashMap<String, String>();
                 paramMap.put("jid",from);
-                paramMap.put("targetAccount",YhClient.getInstance().getLoginAccount());
+                paramMap.put("targetAccount", YhManager.getInstance().getLoginAccount());
                 try {
-                    String URL = "http://" + YhClient.getInstance().getImConnection().getXMPPConnection().getHost() + ":" + 9090 + "/plugins/updserver/contactok";
+                    String URL = "http://" + SysProperties.getHost() + ":" + 9090 + "/plugins/updserver/contactok";
                     SanHttpClient.getDataAsString(URL, paramMap);
                     dispose();
                 } catch (Exception e1) {

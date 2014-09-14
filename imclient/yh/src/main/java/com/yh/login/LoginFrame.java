@@ -1,6 +1,7 @@
 package com.yh.login;
 
-import com.yh.lanuch.YhClient;
+import com.yh.manager.LoginManager;
+import com.yh.manager.YhManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +17,7 @@ public class LoginFrame extends JFrame {
         setResizable(false);
         setSize(475,840);
         setMinimumSize(getSize());
-        setContentPane(new LoginPane(this));
+        setContentPane(new LoginPane());
         setLocationByPlatform(true);
         setLocationRelativeTo(null);
         addComponentListener(new ComponentAdapter() {
@@ -32,6 +33,11 @@ public class LoginFrame extends JFrame {
     @Override
     public void dispose() {
         super.dispose();
-        YhClient.getInstance().closeClient();
+        try {
+            LoginManager.getInstance().loginOut();
+            System.exit(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -2,7 +2,7 @@ package com.dtclient.main.tree;
 
 
 
-import com.dtclient.main.MainFrame;
+import com.dtclient.main.frame.MainFrame;
 import com.dtclient.main.group.GroupDialog;
 
 import javax.swing.*;

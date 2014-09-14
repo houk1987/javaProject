@@ -22,18 +22,20 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="imMsgProService" />
+        <module name="dtclient" />
         <module name="imService" />
         <module name="pubTools" />
+        <module name="qq" />
         <module name="ui" />
         <module name="yh" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="dtclient" target="1.7" />
       <module name="imclient" target="1.7" />
-      <module name="imMsgProService" target="1.7" />
       <module name="imService" target="1.7" />
       <module name="pubTools" target="1.7" />
+      <module name="qq" target="1.7" />
       <module name="ui" target="1.7" />
       <module name="yh" target="1.7" />
     </bytecodeTargetLevel>

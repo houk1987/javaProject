@@ -1,8 +1,6 @@
 package com.imService.connection;
 
 import com.imService.message.ImPacketLister;
-
-
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
@@ -13,17 +11,15 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class ImConnection {
+public class ImConnection{
     private XMPPConnection xmppConnection;
     private String serverName;
 
-    protected ImConnection() {
-        xmppConnection =createXMPPConnection();
-        serverName = "@" + xmppConnection.getServiceName();
-    }
-
-    protected ImConnection(String host,int port,String resource){
-
+    public ImConnection(String host,int port,String resource) {
+        ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(host,port,resource);
+        connectionConfiguration.setSASLAuthenticationEnabled(false);
+        xmppConnection = new XMPPConnection(connectionConfiguration);
+        serverName = xmppConnection.getServiceName();
     }
 
     public void connection()throws XMPPException{
@@ -46,10 +42,10 @@ public abstract class ImConnection {
         }
     }
 
-    public void login(String account, String password) throws XMPPException {
+    public void login(String user, String password) throws XMPPException {
         try {
             if(isConnectionNotNull()) {
-                xmppConnection.login(account , password);
+                xmppConnection.login(user , password);
             }
         } catch (XMPPException e) {
             e.printStackTrace();
@@ -109,15 +105,12 @@ public abstract class ImConnection {
 
                     @Override
                     public void presenceChanged(Presence arg0) {
-                        presenceChangedHandel(arg0);
+
                     }
                 });
     }
 
-    /**
-     * 由子类进行实现
-     */
-    public abstract void presenceChangedHandel(Presence arg0);
+
 
 
     public XMPPConnection getXMPPConnection(){
@@ -132,5 +125,4 @@ public abstract class ImConnection {
         return serverName;
     }
 
-    protected abstract XMPPConnection createXMPPConnection();
 }

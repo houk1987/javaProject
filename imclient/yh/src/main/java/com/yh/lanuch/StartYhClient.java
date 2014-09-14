@@ -1,6 +1,7 @@
 package com.yh.lanuch;
 
-import com.yh.login.LoginFrame;
+
+import com.yh.manager.LoginManager;
 
 import javax.swing.*;
 
@@ -16,8 +17,7 @@ public class StartYhClient {
                 public void run() {
                     try {
                         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-                        LoginFrame loginFrame = new LoginFrame();
-                        loginFrame.setVisible(true);
+                        LoginManager.getInstance().showLoginFrame();
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     } catch (InstantiationException e) {
@@ -27,8 +27,6 @@ public class StartYhClient {
                     } catch (UnsupportedLookAndFeelException e) {
                         e.printStackTrace();
                     }
-
-
                 }
             });
 

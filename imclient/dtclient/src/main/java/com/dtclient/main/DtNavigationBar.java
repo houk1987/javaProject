@@ -1,12 +1,11 @@
 package com.dtclient.main;
 
+import com.dtclient.main.frame.MainFrameContentPane;
 import com.ui.frame.NavigationBar;
-import com.ui.jlabel.ExpandableImageLabel;
 import com.ui.jlabel.JLabelFactory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 

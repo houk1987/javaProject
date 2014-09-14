@@ -4,8 +4,8 @@ package com.yh.presence;
 import com.imService.presence.PresenceType;
 import com.ui.jlabel.ExpandableImageLabel;
 import com.ui.jlabel.JLabelFactory;
-import com.yh.lanuch.YhClient;
 import com.yh.main.MainFrame;
+import com.yh.manager.YhManager;
 import org.jivesoftware.smack.packet.Presence;
 
 import javax.swing.*;
@@ -43,7 +43,7 @@ public class PresenceSelectButton extends JPanel {
         leftLabel.setLayout(new BorderLayout(3, 0));
         leftLabel.add(statusIconLabel, BorderLayout.CENTER);
         Font font = new Font("ËÎÌו", Font.BOLD, 14);
-        account = JLabelFactory.createJLabel(YhClient.getInstance().getLoginAccount(), font, Color.WHITE);
+        account = JLabelFactory.createJLabel(YhManager.getInstance().getLoginAccount(), font, Color.WHITE);
         centerLabel.setLayout(new BorderLayout());
         centerLabel.add(account, BorderLayout.NORTH);
         defaultBg();
@@ -90,7 +90,7 @@ public class PresenceSelectButton extends JPanel {
     private void switchBg(ImageIcon left, ImageIcon center, ImageIcon right) {
         leftLabel.setIcon(left);
         leftLabel.setSize(left.getIconWidth(), left.getIconHeight());
-        centerLabel.setImageIcon(center);
+        //centerLabel.setImageIcon(center);
         rightLabel.setIcon(right);
         rightLabel.setSize(right.getIconWidth(), right.getIconHeight());
         setSize(100, rightLabel.getHeight());
@@ -117,8 +117,8 @@ public class PresenceSelectButton extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     statusIconLabel.setIcon(type.getPresenceTypeIcon());
-                    type.changePresence(YhClient.getInstance().getLoginAccount());
-                    Presence presence = YhClient.getInstance().getImConnection().getContactPresence(YhClient.getInstance().getLoginAccount());
+                    type.changePresence(YhManager.getInstance().getLoginAccount());
+                    Presence presence = YhManager.getInstance().getImConnection().getContactPresence(YhManager.getInstance().getLoginAccount());
                     MainFrame.getInstance().refreshContactTreePresence(presence);
                 }
             });

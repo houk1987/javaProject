@@ -1,6 +1,6 @@
 package com.dtclient.main.presence;
 
-import com.dtclient.lanuch.DtClient;
+import com.dtclient.manager.DtManager;
 import com.imService.presence.*;
 import org.jivesoftware.smack.packet.Presence;
 
@@ -19,10 +19,9 @@ public class DtPresence {
         OFFLINE;
     }
 
-    private static OnLine onLine = new OnLine("在线",createImage("online.png"), DtClient.getInstance().getImConnection());
-    private static Away away = new Away("离开",createImage("away.png"),DtClient.getInstance().getImConnection());
-//    private static Busy busy = new Busy("忙碌中",createImage("busy.png"),DtClient.getInstance().getImConnection());
-    private static OffLine offLine = new OffLine("离线",createImage("offline.png"),DtClient.getInstance().getImConnection());
+    private static OnLine onLine = new OnLine("在线",createImage("online.png"), DtManager.getInstance().getDtClientConnection());
+    private static Away away = new Away("离开",createImage("away.png"), DtManager.getInstance().getDtClientConnection());
+    private static OffLine offLine = new OffLine("离线",createImage("offline.png"), DtManager.getInstance().getDtClientConnection());
 
 
     public static List<PresenceType> getPresenceTypeList() {

@@ -1,7 +1,7 @@
 package com.dtclient.lanuch;
 
-import com.dtclient.main.MainFrame;
-import org.jivesoftware.smack.XMPPException;
+import com.dtclient.manager.LoginManager;
+import com.dtclient.sys.SysProperties;
 
 import javax.swing.*;
 
@@ -10,8 +10,6 @@ import javax.swing.*;
  */
 public class StartDtClient {
 
-    public static String host = "192.168.1.108";
-    public static int port = 5222;
 
     public static void main(String[] args) {
 
@@ -20,7 +18,16 @@ public class StartDtClient {
             public void run() {
                 try {
                     UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-                    validateId("3","1");
+                    //接收参数
+                    SysProperties.setHost("192.168.1.105");
+                    SysProperties.setPort(5222);
+                    SysProperties.setUser("test");
+                    try {
+                        LoginManager.getInstance().login("test","1");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(null,e.getMessage());
+                    }
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 } catch (InstantiationException e) {
@@ -32,14 +39,5 @@ public class StartDtClient {
                 }
             }
         });
-    }
-
-    private static void validateId(String account, String pwd) {
-        try {
-            DtClient.getInstance().loginClient(account,pwd);
-        } catch (XMPPException e) {
-            JOptionPane.showMessageDialog(null,"启动客户端失败!");
-            e.printStackTrace();
-        }
     }
 }

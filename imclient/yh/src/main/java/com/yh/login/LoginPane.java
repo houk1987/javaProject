@@ -6,10 +6,9 @@ import com.ui.checkBox.CheckBoxFactory;
 import com.ui.checkBox.FreeCheckBox;
 import com.ui.font.FontFactory;
 import com.ui.jlabel.JLabelFactory;
-import com.yh.lanuch.YhClient;
 import com.yh.main.MainFrame;
 
-import org.jivesoftware.smack.XMPPException;
+import com.yh.manager.LoginManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +18,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by 356 on 14-8-30.
  */
-public class LoginPane extends JPanel implements ActionListener{
+public class LoginPane extends JPanel implements ActionListener {
 
     private final static String SKIN_PATH = "res/login/";
     private ImageIcon bgImageIcon = new ImageIcon(SKIN_PATH + "loginBg.png");
@@ -38,14 +37,12 @@ public class LoginPane extends JPanel implements ActionListener{
     private JLabel hideLoginLabel; //记住我的密码
     private JLabel registerLinkLabel; //注册
     private JLabel forgetPwdLinkLabel; //忘记密码
-    private LoginFrame loginFrame;
 
-    public LoginPane(final LoginFrame loginFrame) {
+    public LoginPane() {
         setLayout(null);
         MenuPane menuPane = new MenuPane(menuNames);
         menuPane.setBounds(0, 0, 200, 20);
         add(menuPane);
-        this.loginFrame = loginFrame;
 
         logLabel = JLabelFactory.createJLabel(new ImageIcon(SKIN_PATH + "log.png"));
         add(logLabel);
@@ -128,25 +125,25 @@ public class LoginPane extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()  == loginButton){
+        if (e.getSource() == loginButton) {
             final String account = idTextField.getText();
             final String pwd = String.valueOf(passwordField.getPassword());
+            String messageTip = "请输入账号和密码";
             if (account.equals("")) {
-                JOptionPane.showMessageDialog(LoginPane.this, "账号不能为空!");
+                JOptionPane.showMessageDialog(LoginPane.this, messageTip);
                 idTextField.requestFocus();
             }
             if (pwd.equals("")) {
-                JOptionPane.showMessageDialog(LoginPane.this, "密码不能为空!");
+                JOptionPane.showMessageDialog(LoginPane.this, messageTip);
                 passwordField.requestFocus();
             }
             try {
-                YhClient.getInstance().loginClient(account,pwd);
-                loginFrame.setVisible(false);
-                loginFrame = null;
+                LoginManager.getInstance().login(account, pwd);
+                LoginManager.getInstance().closeLoginFrame();
                 MainFrame.getInstance().setVisible(true);
-            } catch (XMPPException e1) {
-                JOptionPane.showMessageDialog(loginFrame, e1.getMessage());
-                YhClient.getInstance().loginOut();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                JOptionPane.showMessageDialog(LoginManager.getInstance().getLoginFrame(), e1.getMessage());
             }
         }
     }

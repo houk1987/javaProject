@@ -1,7 +1,8 @@
 package com.dtclient.main;
 
-import com.dtclient.lanuch.DtClient;
+import com.dtclient.manager.DtManager;
 import com.dtclient.main.presence.PresenceSelectButton;
+import com.dtclient.manager.SynDataManager;
 import com.ui.jlabel.JLabelFactory;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.awt.*;
  */
 public class AccountInfoPane extends JPanel {
     PresenceSelectButton presenceSelectButton =  new PresenceSelectButton();
-    JLabel accountName = new JLabel(DtClient.getInstance().getLoginAccount());
+    JLabel accountName = new JLabel( SynDataManager.getInstance().getLoginUserInfo().getUsername());
     public AccountInfoPane() {
         setLayout(new BorderLayout());
         JPanel panel = new JPanel();

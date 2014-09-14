@@ -5,12 +5,10 @@ import com.imService.contact.Contact;
 import com.ui.tree.ContactGroup;
 import com.ui.tree.ContactItem;
 import com.ui.tree.TreePane;
-import com.yh.lanuch.YhClient;
+import com.yh.manager.YhManager;
 import com.yh.presence.YhPresence;
 import org.jivesoftware.smack.packet.Presence;
 
-import javax.swing.*;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,7 +26,7 @@ public class YhContactTree extends TreePane {
         friends = new ContactGroup("friends");
         address = new ContactGroup("通訊錄");
         //获得所有的好友
-        YmContactManager ymContactManager = new YmContactManager(YhClient.getInstance().getImConnection());
+        YmContactManager ymContactManager = new YmContactManager(YhManager.getInstance().getImConnection());
         List<Contact> contactList = ymContactManager.getAllContact();
         //循环添加friends 好友
         for(Contact contact : contactList){

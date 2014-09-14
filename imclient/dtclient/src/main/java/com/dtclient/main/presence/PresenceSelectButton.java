@@ -1,7 +1,8 @@
 package com.dtclient.main.presence;
 
 
-import com.dtclient.lanuch.DtClient;
+import com.dtclient.manager.DtManager;
+import com.dtclient.manager.SynDataManager;
 import com.imService.presence.PresenceType;
 import com.ui.jlabel.ExpandableImageLabel;
 import com.ui.jlabel.JLabelFactory;
@@ -113,8 +114,8 @@ public class PresenceSelectButton extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     statusIconLabel.setIcon(type.getPresenceTypeIcon());
-                    type.changePresence(DtClient.getInstance().getLoginAccount());
-                    Presence presence = DtClient.getInstance().getImConnection().getContactPresence(DtClient.getInstance().getLoginAccount());
+                    type.changePresence(SynDataManager.getInstance().getLoginUserInfo().getId());
+                   // Presence presence = DtManager.getInstance().getDtClientConnection().getContactPresence(DtManager.getInstance().getLoginAccount());
                 }
             });
         }

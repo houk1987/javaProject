@@ -2,10 +2,8 @@ package com.yh.main;
 
 import com.ui.jlabel.JLabelFactory;
 import com.yh.button.CustomButtonFactory;
-import com.yh.lanuch.YhClient;
 import com.yh.login.MenuPane;
 import com.yh.main.contact.YhContactTree;
-import com.yh.main.contact.YmContactManager;
 import com.yh.main.contact.addContact.AddContactDialog;
 import com.yh.presence.PresenceSelectButton;
 import org.jivesoftware.smack.packet.Presence;

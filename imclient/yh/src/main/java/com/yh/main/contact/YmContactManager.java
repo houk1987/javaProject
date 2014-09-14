@@ -4,7 +4,8 @@ import com.imService.connection.ImConnection;
 import com.imService.contact.Contact;
 import com.imService.contact.ContactManager;
 import com.imService.presence.OnLine;
-import com.yh.lanuch.YhClient;
+import com.yh.manager.LoginManager;
+import com.yh.manager.YhManager;
 import com.yh.presence.YhPresence;
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.packet.Message;
@@ -32,10 +33,9 @@ public class YmContactManager extends ContactManager {
         List<Contact> contacts = new ArrayList<>();
         ImageIcon headIcon = new ImageIcon("res/main/headItem.png");
         //默认添加自己
-
-        YhContact m = new YhContact(YhClient.getInstance().getLoginAccount(),YhClient.getInstance().getLoginAccount(),headIcon);
-        Presence ownerpresence = YhClient.getInstance().getImConnection().getContactPresence(YhClient.getInstance().getLoginAccount());
-        m.setPresenceType(new OnLine("",YhPresence.getPresenceTypeIcon(ownerpresence),YhClient.getInstance().getImConnection()));
+        YhContact m = new YhContact(YhManager.getInstance().getLoginAccount(),YhManager.getInstance().getLoginAccount(),headIcon);
+        Presence ownerpresence = YhManager.getInstance().getImConnection().getContactPresence(YhManager.getInstance().getLoginAccount());
+        m.setPresenceType(new OnLine("",YhPresence.getPresenceTypeIcon(ownerpresence), YhManager.getInstance().getImConnection()));
         contacts.add(m);
         for(RosterEntry entry : rosterEntryList){
             YhContact yhContact = new YhContact(entry.getUser(),entry.getUser(),headIcon);
@@ -45,8 +45,8 @@ public class YmContactManager extends ContactManager {
                 e.printStackTrace();
             }
 
-            Presence presence = YhClient.getInstance().getImConnection().getContactPresence(entry.getUser());
-            yhContact.setPresenceType(new OnLine("", YhPresence.getPresenceTypeIcon(presence), YhClient.getInstance().getImConnection()));
+            Presence presence = YhManager.getInstance().getImConnection().getContactPresence(entry.getUser());
+            yhContact.setPresenceType(new OnLine("", YhPresence.getPresenceTypeIcon(presence), YhManager.getInstance().getImConnection()));
             contacts.add(yhContact);
         }
         return contacts;
@@ -54,10 +54,10 @@ public class YmContactManager extends ContactManager {
 
     public void  applyNewContact(String applyAccount){
         Message message = new Message();
-        message.setFrom(YhClient.getInstance().getLoginAccount());
+        message.setFrom(YhManager.getInstance().getLoginAccount());
         message.setTo(applyAccount);
-        message.setBody(YhClient.getInstance().getLoginAccount() + "申请您为好友!");
+        message.setBody(YhManager.getInstance().getLoginAccount() + "申请您为好友!");
         message.setSubject("好友申請");
-        YhClient.getInstance().getSession(applyAccount, Message.Type.chat).sendMessage(message);
+        //YhClient.getInstance().getSession(applyAccount, Message.Type.chat).sendMessage(message);
     }
 }

@@ -4,8 +4,9 @@ import com.san30.pub.tools.SanHttpClient;
 import com.ui.JTextField.JTextFieldFactory;
 import com.ui.jlabel.JLabelFactory;
 import com.yh.button.CustomButtonFactory;
-import com.yh.lanuch.YhClient;
 import com.yh.main.contact.YmContactManager;
+import com.yh.manager.YhManager;
+import sys.SysProperties;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,7 +17,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by a on 2014/9/2.
@@ -252,10 +252,10 @@ public class ContactPane extends JPanel implements ActionListener{
             HashMap<String,String> paramMap = new HashMap<String, String>();
             paramMap.put("jid",firstPane.accountJTextField.getText());
             paramMap.put("type","validateAccount");
-            String rs = SanHttpClient.getDataAsString("http://" + YhClient.getInstance().getImConnection().getXMPPConnection().getHost() + ":" + 9090 + "/plugins/updserver/contactok", paramMap);
+            String rs = SanHttpClient.getDataAsString("http://" + SysProperties.getHost() + ":" + 9090 + "/plugins/updserver/contactok", paramMap);
             System.out.println("添加的结果"+rs);
             if(Boolean.valueOf(rs.trim())){
-                YmContactManager ymContactManager = new YmContactManager(YhClient.getInstance().getImConnection());
+                YmContactManager ymContactManager = new YmContactManager(YhManager.getInstance().getImConnection());
                 ymContactManager.applyNewContact(firstPane.accountJTextField.getText());
                 thridPane.setTipText("系统已经向朋友发出了好友申请。");
                 finishButton.setVisible(true);

@@ -1,8 +1,7 @@
 package com.dtclient.main.group;
 
 
-import com.dtclient.lanuch.DtClient;
-import com.dtclient.main.MainFrame;
+import com.dtclient.manager.DtManager;
 import com.dtclient.vo.FriendRooms;
 import com.dtclient.vo.UserInfo;
 import com.google.gson.Gson;
@@ -24,11 +23,11 @@ public class GroupManager {
 
     public static FriendRooms createGroup(String groupName,List<UserInfo> memberList) throws XMPPException {
         //在openfire服务器上创建会议室
-        ImConnection imConnection = DtClient.getInstance().getImConnection();
-        MultiUserChat multiUserChat = ConferenceRoomManager.createConferenceRoom(imConnection, DtClient.getInstance().getLoginAccount()+groupName, coverToMemberNamesList(memberList));
+        ImConnection imConnection = DtManager.getInstance().getImConnection();
+        MultiUserChat multiUserChat = ConferenceRoomManager.createConferenceRoom(imConnection, DtManager.getInstance().getLoginAccount()+groupName, coverToMemberNamesList(memberList));
         //刷新树节点
         FriendRooms friendRooms = new FriendRooms();
-        friendRooms.setJid(DtClient.getInstance().getLoginAccount()+groupName + "@conference." + imConnection.getXMPPConnection().getServiceName());
+        friendRooms.setJid(DtManager.getInstance().getLoginAccount()+groupName + "@conference." + imConnection.getXMPPConnection().getServiceName());
         friendRooms.setName(groupName);
         friendRooms.setUserInfoList(memberList);
         return friendRooms;
@@ -44,7 +43,7 @@ public class GroupManager {
             }
             Gson gson = new Gson();
             String saveUserContent  = gson.toJson(memberList);
-            FileTools.writeFile(new File("usr/" + DtClient.getInstance().getLoginAccount() + ".txt"), saveUserContent);
+            FileTools.writeFile(new File("usr/" + DtManager.getInstance().getLoginAccount() + ".txt"), saveUserContent);
         } catch (XMPPException e) {
             e.printStackTrace();
         }
@@ -60,7 +59,7 @@ public class GroupManager {
     }
 
     public static List<UserInfo> getAllUserList() {
-        List list = FileTools.readFileToList(new File("usr/" + DtClient.getInstance().getLoginAccount() + ".txt"));
+        List list = FileTools.readFileToList(new File("usr/" + DtManager.getInstance().getLoginAccount() + ".txt"));
         if (list != null && list.size() > 0) {
             List<UserInfo> userList = new ArrayList<>();
             Gson gson = new Gson();

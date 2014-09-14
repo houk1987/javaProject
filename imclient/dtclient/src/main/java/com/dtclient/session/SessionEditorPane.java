@@ -1,7 +1,6 @@
 package com.dtclient.session;
 
 
-import com.dtclient.lanuch.DtClient;
 import com.dtclient.sys.SysProperties;
 import com.imService.message.SessionMessage;
 import com.ui.button.ImageButtonFactory;

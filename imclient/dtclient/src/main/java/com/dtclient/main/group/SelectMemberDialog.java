@@ -1,10 +1,10 @@
 package com.dtclient.main.group;
 
-import com.dtclient.lanuch.DtClient;
-import com.dtclient.lanuch.StartDtClient;
 import com.dtclient.main.tree.OrgTree;
+import com.dtclient.sys.SysProperties;
 import com.dtclient.vo.UserInfo;
-import com.san30.sim.pub.imagewindow.ImageDialog;
+import com.ui.button.ImageButtonFactory;
+import com.ui.frame.PubDialog;
 
 
 import javax.swing.*;
@@ -17,8 +17,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectMemberDialog extends ImageDialog implements ActionListener{
+public class SelectMemberDialog extends PubDialog implements ActionListener{
     private static final long serialVersionUID = 1L;
+    private String SKIN_PATH=SysProperties.frameButtonPath();
     private JTextField searchText;
     private JScrollPane left;
     private JScrollPane right;
@@ -34,17 +35,17 @@ public class SelectMemberDialog extends ImageDialog implements ActionListener{
     private List<UserInfo> userList = new ArrayList<>();
 
     public SelectMemberDialog(GroupDialog owner) {
-        super(owner);
+        super(owner,new GroupDialogTitle("选择群成员"));
         init();
         this.setLocationRelativeTo(owner);
         this.groupDialog = owner;
     }
 
     private void init() {
-        setImagePath("res/dialog/border");
+        setImagePath(SysProperties.framePath());
         setModal(true);
-        initComponents();
-        layoutComponents();
+       initComponents();
+       layoutComponents();
     }
 
     /**
@@ -52,11 +53,11 @@ public class SelectMemberDialog extends ImageDialog implements ActionListener{
      */
     private void initComponents() {
         searchText = new JTextField("键入名称");
-//        searchButton = ButtonFactoryManager.getCommonButtonFactory().createSearchButton();
-//        choosedButton = ButtonFactoryManager.getCommonButtonFactory().createSelectButton();
-//        removeButton = ButtonFactoryManager.getCommonButtonFactory().createRemoveButton();
-//        cancelButton = ButtonFactoryManager.getCommonButtonFactory().createCancelButton();
-//        okButton = ButtonFactoryManager.getCommonButtonFactory().createOkButton();
+        searchButton = ImageButtonFactory.createButton(SKIN_PATH,"搜索","search.png");
+        choosedButton =  ImageButtonFactory.createButton(SKIN_PATH,"选择","select.png");
+        removeButton = ImageButtonFactory.createButton(SKIN_PATH,"移除","remove.png");
+        cancelButton =  ImageButtonFactory.createButton(SKIN_PATH,"取消","cancel.png");
+        okButton = ImageButtonFactory.createButton(SKIN_PATH,"确定","ok.png");
 
         left = new JScrollPane();
         left.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -76,11 +77,6 @@ public class SelectMemberDialog extends ImageDialog implements ActionListener{
      * 进行布局，给组件添加事件监听
      */
     private void layoutComponents() {
-        JPanel northPane = new JPanel(new BorderLayout());
-        northPane.setOpaque(false);
-        this.add(northPane, BorderLayout.NORTH);
-        northPane.add(new JLabel("自定义群组"), BorderLayout.WEST);
-
         JPanel contentPane = new JPanel(null);
         contentPane.setOpaque(false);
         contentPane.setBackground(new Color(249, 251, 254));

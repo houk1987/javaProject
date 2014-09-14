@@ -19,6 +19,8 @@ public class ExpandableImageLabel extends JLabel {
         setImageFile(imageFile);
     }
 
+
+
     public boolean setImageFile(String imageFile){
         this.imageFile = imageFile;
         if (null == imageFile) return false;

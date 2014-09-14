@@ -1,22 +1,26 @@
 package com.dtclient.main.group;
 
-import com.dtclient.main.MainFrame;
+import com.dtclient.manager.DtManager;
+import com.dtclient.main.frame.MainFrame;
 import com.dtclient.main.tree.CustomTree;
 import com.dtclient.sys.SysProperties;
 import com.dtclient.vo.FriendRooms;
-import com.san30.sim.pub.imagewindow.ImageDialog;
+import com.dtclient.vo.UserInfo;
+
 import com.ui.button.ImageButtonFactory;
 import com.ui.frame.PubDialog;
-import com.ui.frame.PubFrame;
+
 
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -37,20 +41,20 @@ public class GroupDialog extends PubDialog implements ActionListener {
     private FriendRooms friendRooms;
 
     public GroupDialog(Frame owner) {
-        super(owner,new GroupDialogTitle());
+        super(owner,new GroupDialogTitle("自定义群组"));
         setImagePath(SysProperties.framePath());
         this.setLocationRelativeTo(owner);
-       initComponents();
+        initComponents();
         layoutComponents();
+        userList.add(DtManager.getInstance().getUserInfo());
         //initTable(this.userList);
     }
 
     public GroupDialog(FriendRooms friendRooms, Frame owner) {
         this(owner);
         this.friendRooms = friendRooms;
-        //userList = GroupManager.getAllUserListWithGroupId(friendRooms.getJid());
         initGroupData();
-      //  initTable(this.userList);
+
     }
 
     /**
@@ -63,9 +67,9 @@ public class GroupDialog extends PubDialog implements ActionListener {
         groupNameJTextField.requestFocus();
         cancelButton = ImageButtonFactory.createButton(SKIN_PATH,"取消","cancel.png");
         okButton = ImageButtonFactory.createButton(SKIN_PATH, "确定", "ok.png");
-      //  addMemberButton = ButtonFactoryManager.getCommonButtonFactory().createAddButton();
-      //  delMemberButton = ButtonFactoryManager.getCommonButtonFactory().createDelButton();
-      //  groupMemberTable = new GroupMemberTable(userList);
+        addMemberButton = ImageButtonFactory.createButton(SKIN_PATH, "添加", "add.png");
+        delMemberButton = ImageButtonFactory.createButton(SKIN_PATH,"删除","delete.png");
+        groupMemberTable = new GroupMemberTable(userList);
     }
 
     /**
@@ -80,8 +84,8 @@ public class GroupDialog extends PubDialog implements ActionListener {
         groupNameLabel.setBounds(15, 15, 120, 24);
         groupNameJTextField.setBounds(15, 45, 230, 24);
         groupMemberNameLabel.setBounds(15, 75, 120, 24);
-//        addMemberButton.setLocation(260, 115);
-//        delMemberButton.setLocation(260, 145);
+        addMemberButton.setLocation(260, 115);
+        delMemberButton.setLocation(260, 145);
 
         //添加已在群组成员表格
         JScrollPane jScrollPane = new JScrollPane();
@@ -92,8 +96,8 @@ public class GroupDialog extends PubDialog implements ActionListener {
         centerPane.add(groupNameJTextField);//群组名称输入框
         centerPane.add(groupMemberNameLabel);//群组人员名称
         centerPane.add(jScrollPane);//添加右边表格
-//        centerPane.add(addMemberButton);//添加添加人员按钮
-//        centerPane.add(delMemberButton);//删除人员按钮
+        centerPane.add(addMemberButton);//添加添加人员按钮
+        centerPane.add(delMemberButton);//删除人员按钮
 
         //底部确定，取消按钮所在面板
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -102,8 +106,8 @@ public class GroupDialog extends PubDialog implements ActionListener {
         bottomPanel.add(okButton);
         bottomPanel.add(cancelButton);
         //添加监听
-//        addMemberButton.addActionListener(this);
-//        delMemberButton.addActionListener(this);
+        addMemberButton.addActionListener(this);
+        delMemberButton.addActionListener(this);
         okButton.addActionListener(this);
         cancelButton.addActionListener(this);
     }
@@ -132,30 +136,30 @@ public class GroupDialog extends PubDialog implements ActionListener {
         } else if (e.getSource() == this.cancelButton) {
             this.dispose();
         } else if (e.getSource() == this.addMemberButton) {
-//            SelectMemberDialog selectMemberDialog = new SelectMemberDialog(this);
-//            selectMemberDialog.loadSelectedUserTable(userList);
-//            selectMemberDialog.setVisible(true);
+            SelectMemberDialog selectMemberDialog = new SelectMemberDialog(this);
+            selectMemberDialog.loadSelectedUserTable(userList);
+            selectMemberDialog.setVisible(true);
         } else if (e.getSource() == this.delMemberButton) {
             delete();
         }
     }
 
 
-//    public void initTable(List<User> users) {
-//        this.userList = users;
-//        groupMemberTable.load(userList);
-//    }
+    public void initTable(List<UserInfo> users) {
+        this.userList = users;
+        groupMemberTable.load(userList);
+    }
 
     private void delete() {
-//        int[] rows = groupMemberTable.getSelectedRows();
-//        int offset = 0;
-//        for (int i = 0; i < rows.length; i++) {
-//            Object objects =groupMemberTable.getModel().getValueAt(rows[i - offset],1);
-//            if(objects.toString().equals(Global.getLoginUser().getId()))return;
-//            groupMemberTable.delete(rows[i - offset]);
-//            userList.remove(i - offset);
-//            offset++;
-//        }
+        int[] rows = groupMemberTable.getSelectedRows();
+        int offset = 0;
+        for (int i = 0; i < rows.length; i++) {
+            Object objects =groupMemberTable.getModel().getValueAt(rows[i - offset],1);
+            if(objects.toString().equals(DtManager.getInstance().getLoginAccount()))return;
+            groupMemberTable.delete(rows[i - offset]);
+            userList.remove(i - offset);
+            offset++;
+        }
     }
 
 
@@ -175,5 +179,10 @@ public class GroupDialog extends PubDialog implements ActionListener {
         }catch (Exception e){
             JOptionPane.showMessageDialog(this,"创建群组失败!","提示",JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public static void main(String[] args) {
+        GroupDialog groupDialog = new GroupDialog(null);
+        groupDialog.setVisible(true);
     }
 }

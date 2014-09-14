@@ -8,7 +8,8 @@ import com.ui.jlabel.JLabelFactory;
 import com.ui.session.ChatDisplayPane;
 import com.ui.session.ChatWritePane;
 import com.yh.button.CustomButtonFactory;
-import com.yh.lanuch.YhClient;
+import com.yh.manager.LoginManager;
+import com.yh.manager.YhManager;
 import com.yh.session.message.ChatMessageContentHtml;
 import org.jivesoftware.smack.packet.Presence;
 
@@ -36,7 +37,7 @@ public class MainPane extends JPanel {
     }
 
     private void initComponent(){
-        Presence type =YhClient.getInstance().getImConnection().getContactPresence(sessionFrame.getTo());
+        Presence type =YhManager.getInstance().getImConnection().getContactPresence(sessionFrame.getTo());
         if(type.isAvailable()){
             statusIcon = JLabelFactory.createJLabel(new ImageIcon("res/status/online.png"));
         }else{
@@ -59,7 +60,7 @@ public class MainPane extends JPanel {
         EditorbarPane editorbarPane = new EditorbarPane();
         panel.add(editorbarPane,BorderLayout.NORTH);
 
-        SessionMessage sessionMessage = new SessionMessage(YhClient.getInstance().getClientLoginer().getAccount(),"","",new FontStyle());
+        SessionMessage sessionMessage = new SessionMessage(YhManager.getInstance().getLoginAccount(),"","",new FontStyle());
         chatWritePane = new ChatWritePane(sessionMessage);
         panel.add(chatWritePane,BorderLayout.CENTER);
         JPanel jPanel = new JPanel(new BorderLayout());
@@ -70,10 +71,10 @@ public class MainPane extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SessionMessage sessionMessage = chatWritePane.getSessionMessage();
-                Session session = YhClient.getInstance().getSession(sessionFrame.getTo(),sessionFrame.getTypes());
-                session.sendMessage(sessionMessage);
-                String html = new ChatMessageContentHtml(sessionMessage).getContentHtml();
-                chatDisplayPane.insertMessage(html);
+//                Session session = YhManager.getInstance().getSession(sessionFrame.getTo(),sessionFrame.getTypes());
+//                session.sendMessage(sessionMessage);
+//                String html = new ChatMessageContentHtml(sessionMessage).getContentHtml();
+//                chatDisplayPane.insertMessage(html);
             }
         });
         jPanel.add(jButton,BorderLayout.CENTER);

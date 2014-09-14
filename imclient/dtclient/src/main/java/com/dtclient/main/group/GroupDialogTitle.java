@@ -10,6 +10,12 @@ import java.awt.*;
  * Created by lenovo on 2014/9/12.
  */
 public class GroupDialogTitle implements Title{
+
+    private String titleTxt;
+    public GroupDialogTitle(String titleTxt) {
+        this.titleTxt = titleTxt;
+    }
+
     @Override
     public String getBtnImagePath() {
         return SysProperties.frameButtonPath();
@@ -22,7 +28,7 @@ public class GroupDialogTitle implements Title{
 
     @Override
     public String getTxt() {
-        return "自定义群组";
+        return titleTxt;
     }
 
     @Override

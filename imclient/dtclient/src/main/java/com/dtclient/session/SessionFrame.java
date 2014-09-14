@@ -2,19 +2,14 @@ package com.dtclient.session;
 
 
 
-import com.dtclient.lanuch.DtClient;
-import com.dtclient.main.MainFrameTitle;
+import com.dtclient.manager.DtManager;
 import com.dtclient.session.messageHandel.ChatMessageContentHtml;
 import com.dtclient.sys.SysProperties;
 import com.dtclient.vo.FriendRooms;
 import com.dtclient.vo.UserInfo;
 import com.imService.message.SessionMessage;
-import com.imService.session.ChatSession;
-import com.imService.session.GroupSession;
 import com.ui.frame.PubFrame;
-import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smackx.muc.MultiUserChat;
 
 import javax.swing.*;
 import java.awt.*;
@@ -91,13 +86,13 @@ public class SessionFrame extends PubFrame{
 
     public void sendMessage(SessionMessage sessionMessage){
         sessionMessage.setTo(jid);
-        sessionMessage.setFrom(DtClient.getInstance().getLoginAccount());
+        sessionMessage.setFrom(DtManager.getInstance().getLoginAccount());
         sessionMessage.setSendTime(new Timestamp(System.currentTimeMillis()));
         Message message = new Message();
         message.setFrom(sessionMessage.getFrom());
         message.setTo(sessionMessage.getTo());
         message.setBody(sessionMessage.getContent());
         message.setProperty("sendTime",sessionMessage.getSendTime());
-        DtClient.getInstance().getSession(jid,type).sendMessage(message);
+        DtManager.getInstance().getSession(jid,type).sendMessage(message);
     }
 }

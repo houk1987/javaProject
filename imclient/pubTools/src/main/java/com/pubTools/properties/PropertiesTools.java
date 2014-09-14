@@ -35,7 +35,6 @@ public class PropertiesTools {
             prop.setProperty(parameterName, parameterValue);
             //以适合使用 load 方法加载到 Properties 表中的格式，
             //将此 Properties 表中的属性列表（键和元素对）写入输出流
-            prop.store(fos, "Update '" + parameterName + "' value");
         } catch (IOException e) {
             System.err.println("Visit "+filePath+" for updating "+parameterName+" value error");
         }

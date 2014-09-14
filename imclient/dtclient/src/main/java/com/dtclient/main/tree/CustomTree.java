@@ -1,8 +1,8 @@
 package com.dtclient.main.tree;
 
 
-import com.dtclient.lanuch.DtClient;
-import com.dtclient.main.MainFrame;
+import com.dtclient.manager.DtManager;
+import com.dtclient.main.frame.MainFrame;
 import com.dtclient.main.group.GroupManager;
 import com.dtclient.session.SessionFrame;
 import com.dtclient.vo.FriendRooms;
@@ -44,7 +44,7 @@ public class CustomTree extends PubTree implements MouseListener {
      * 在受训人员时 只加载导调一个人
      */
     public void loadDtUserInfo() {
-        for (UserInfo userInfo : DtClient.getInstance().getUserInfoList()) {
+        for (UserInfo userInfo : DtManager.getInstance().getUserInfoList()) {
             if (userInfo.getRoleId() == 3) {  //导演一人
                 DefaultMutableTreeNode userNode = new DefaultMutableTreeNode(userInfo);
                 root.add(userNode);
@@ -59,7 +59,7 @@ public class CustomTree extends PubTree implements MouseListener {
     public void loadDefaultGroup() {
         try {
             List<UserInfo> defaultUserInfoList = new ArrayList<>();
-            for (UserInfo userInfo : DtClient.getInstance().getUserInfoList()) {
+            for (UserInfo userInfo : DtManager.getInstance().getUserInfoList()) {
                 if (userInfo.getRoleId() != 2) {
                     defaultUserInfoList.add(userInfo);
                 }
@@ -127,7 +127,7 @@ public class CustomTree extends PubTree implements MouseListener {
             if (component instanceof DefaultMutableTreeNode) {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) component;
                 if (e.getButton() == 3 && this.isPathSelected(path)) {
-                    if(DtClient.getInstance().getUserInfo().getRoleId() == 3){
+                    if(DtManager.getInstance().getUserInfo().getRoleId() == 3){
                         this.customTreeRightMenu = new CustomTreeRightMenu(node);
                         this.customTreeRightMenu.show(this, e.getX() + 5, e.getY() + 5);
                     }

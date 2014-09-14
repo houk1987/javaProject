@@ -1,13 +1,12 @@
 package com.dtclient.main.tree;
 
 
-import com.dtclient.lanuch.DtClient;
-import com.dtclient.main.MainFrame;
+import com.dtclient.main.frame.MainFrame;
+import com.dtclient.manager.SynDataManager;
 import com.dtclient.session.SessionFrame;
 import com.dtclient.vo.Unit;
 import com.dtclient.vo.UserInfo;
 import com.ui.tree.PubTree;
-import org.jivesoftware.smack.packet.Message;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -51,8 +50,8 @@ public class OrgTree extends PubTree {
     }
 
     public void loadData() {
-        final List<UserInfo> userList = SynDataService.getInstance().synUsers();
-        final List<Unit> unitList = SynDataService.getInstance().synUnits();
+        final List<UserInfo> userList =  SynDataManager.getInstance().synUsers();
+        final List<Unit> unitList =  SynDataManager.getInstance().synUnits();
         if (unitList != null && unitList.size() > 0) {
             for (Unit unit : unitList) {
                 DefaultMutableTreeNode unitNode = new DefaultMutableTreeNode(unit);

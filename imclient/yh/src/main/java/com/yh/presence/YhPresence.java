@@ -1,7 +1,7 @@
 package com.yh.presence;
 
 import com.imService.presence.*;
-import com.yh.lanuch.YhClient;
+import com.yh.manager.YhManager;
 import org.jivesoftware.smack.packet.Presence;
 
 import javax.swing.*;
@@ -19,9 +19,9 @@ public class YhPresence  {
         HIDE;
     }
 
-    private static OnLine onLine = new OnLine("我在空",createImage("online.png"),YhClient.getInstance().getImConnection());
-    private static Busy busy = new Busy("忙碌中",createImage("busy.png"),YhClient.getInstance().getImConnection());
-    private static Hide hide = new Hide("對所有人隐藏",createImage("offline.png"),YhClient.getInstance().getImConnection());
+    private static OnLine onLine = new OnLine("我在空",createImage("online.png"), YhManager.getInstance().getImConnection());
+    private static Busy busy = new Busy("忙碌中",createImage("busy.png"),YhManager.getInstance().getImConnection());
+    private static Hide hide = new Hide("對所有人隐藏",createImage("offline.png"),YhManager.getInstance().getImConnection());
 
     public static List<PresenceType> getPresenceTypeList() {
         List<PresenceType> presenceTypes = new ArrayList<>();

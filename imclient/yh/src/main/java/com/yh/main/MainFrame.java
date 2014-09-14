@@ -1,6 +1,6 @@
 package com.yh.main;
 
-import com.yh.lanuch.YhClient;
+import com.yh.manager.LoginManager;
 import org.jivesoftware.smack.packet.Presence;
 
 import javax.swing.*;
@@ -39,6 +39,6 @@ public class MainFrame extends JFrame {
     @Override
     public void dispose() {
         super.dispose();
-        YhClient.getInstance().closeClient();
+
     }
 }
